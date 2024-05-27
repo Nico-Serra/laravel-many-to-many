@@ -138,11 +138,11 @@ class ProjectController extends Controller
         if ($project->has('technologies')) {
             $project->technologies()->detach($project->technologies()->get());
 
-            
+
 
             $project->technologies()->sync($val_data['technologies']);
             //dd($project->technologies);
-            dd($project->technologies()->get());
+            //dd($project->technologies()->get());
         }
 
         //dd($project->technologies()->get());
@@ -164,8 +164,12 @@ class ProjectController extends Controller
             Storage::delete($project->cover_image);
         }
 
+        if ($project->has('technologies')) {
+            $project->technologies()->detach($project->technologies()->get());
+        }
+
         $project->delete();
 
-        return back()->with('message', $project->name . ' deleted with success');
+        return to_route('admin.projects.index')->with('message', $project->name . ' deleted with success');
     }
 }
