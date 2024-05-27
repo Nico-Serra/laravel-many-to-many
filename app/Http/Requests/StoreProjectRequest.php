@@ -23,6 +23,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:projects,name|min:5|max:100',
+            'technologies' => 'exists:technologies,id',
             //'slug' => 'required|min:5|max:100',
             'type_id' => 'nullable|exists:types,id',
             'link' => 'nullable|min:15|max:255',

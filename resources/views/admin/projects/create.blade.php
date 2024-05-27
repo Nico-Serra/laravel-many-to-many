@@ -25,13 +25,37 @@
                 <select class="form-select form-select-sm" name="type_id" id="type_id">
                     <option selected disabled>Select the type</option>
                     @foreach ($types as $type)
-                        <option value="{{ $type->id }}"
-                            {{ $type->id == old('type_id') ? 'selected' : '' }}>
+                        <option value="{{ $type->id }}" {{ $type->id == old('type_id') ? 'selected' : '' }}>
                             {{ $type->name }}</option>
                     @endforeach
                 </select>
             </div>
 
+            {{-- Technologies --}}
+
+
+            <div>
+                <span>Insert the technolgies with you used in
+                    our project:</span>
+                <div class="d-flex m-3 justify-content-between flex-wrap">
+                    @foreach ($technologies as $tech)
+                        <div class="form-check">
+                            <input name="technologies[]" class="form-check-input" type="checkbox"
+                                value="{{ $tech->id }}" id="technolgies-{{ $tech->id }}"
+                                {{ in_array($tech->id, old('technologies', [])) ? 'checked' : '' }} />
+                            <label class="form-check-label"
+                                for="technolgies-{{ $tech->id }}">{{ $tech->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
+
+                @error('technologies')
+                    <div class="text-danger py-2">
+                        {{ $message }}
+                    </div>
+                @enderror
+
+            </div>
 
             <div class="mb-3">
                 <label for="link" class="form-label">link</label>

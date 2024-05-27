@@ -21,7 +21,19 @@
                         <div class="mb-3">
                             Project Date : <strong>{{ $project->project_date }}</strong>
                         </div>
-                        <strong>Type:</strong> {{ $project->type ? $project->type->name : 'Untype' }}
+                        <div class="mb-3">
+                            <strong>Type:</strong> {{ $project->type ? $project->type->name : 'Untype' }}
+                        </div>
+                        @forelse ($project->technologies()->get() as $tech)
+                            {{-- @dd($project->technologies()->get()) --}}
+                            <div class="badge text-bg-dark">
+                                {{ $tech->name }}
+                            </div>
+                        @empty
+                            <div class="badge text-bg-dark">
+                                Nothing Technologies
+                            </div>
+                        @endforelse
                     </div>
 
                     <div class="py-5">
