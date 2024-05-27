@@ -95,8 +95,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.edit', compact('project', 'types'));
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -134,6 +135,17 @@ class ProjectController extends Controller
         //$val_data['type_id'] = $request['type_id'];
 
         //dd($val_data);
+        if ($project->has('technologies')) {
+            $project->technologies()->detach($project->technologies()->get());
+
+            
+
+            $project->technologies()->sync($val_data['technologies']);
+            //dd($project->technologies);
+            dd($project->technologies()->get());
+        }
+
+        //dd($project->technologies()->get());
 
         $project->update($val_data);
 

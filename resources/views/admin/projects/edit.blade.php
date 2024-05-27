@@ -44,6 +44,54 @@
                 </select>
             </div>
 
+            @if ($errors->any())
+                <div>
+                    <span>Insert the technolgies with you used in
+                        our project:</span>
+                    <div class="d-flex m-3 justify-content-between flex-wrap">
+                        @foreach ($technologies as $tech)
+                            <div class="form-check">
+                                <input name="technologies[]" class="form-check-input" type="checkbox"
+                                    value="{{ $tech->id }}" id="technolgies-{{ $tech->id }}"
+                                    {{ in_array($tech->id, old('technologies', [])) ? 'checked' : '' }} />
+                                <label class="form-check-label"
+                                    for="technolgies-{{ $tech->id }}">{{ $tech->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @error('technologies')
+                        <div class="text-danger py-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+            @else
+                <div>
+                    <span>Insert the technolgies with you used in
+                        our project:</span>
+                    <div class="d-flex m-3 justify-content-between flex-wrap">
+                        @foreach ($technologies as $tech)
+                            <div class="form-check">
+                                <input name="technologies[]" class="form-check-input" type="checkbox"
+                                    value="{{ $tech->id }}" id="technolgies-{{ $tech->id }}"
+                                    {{ $project->technologies()->get()->contains($tech->id)? 'checked': 'no' }} />
+                                <label class="form-check-label"
+                                    for="technolgies-{{ $tech->id }}">{{ $tech->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @error('technologies')
+                        <div class="text-danger py-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+            @endif
+
             <div class="mb-3">
                 <label for="link" class="form-label">link site</label>
                 <input type="text" class="form-control @error('link') is-invalid @enderror" name="link" id="link"
