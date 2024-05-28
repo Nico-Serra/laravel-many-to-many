@@ -29,7 +29,7 @@ class TypeController extends Controller
     {
         $types = Type::all();
 
-        return view('admin.types.create', compact('types'));
+        return view('admin.types.index', compact('types'));
     }
 
     /**

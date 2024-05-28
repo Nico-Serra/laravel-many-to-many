@@ -136,7 +136,7 @@ class ProjectController extends Controller
 
         //dd($val_data);
         if ($project->has('technologies')) {
-            $project->technologies()->detach($project->technologies()->get());
+           // $project->technologies()->detach($project->technologies()->get());
 
 
 
@@ -144,7 +144,6 @@ class ProjectController extends Controller
             //dd($project->technologies);
             //dd($project->technologies()->get());
         }
-
         //dd($project->technologies()->get());
 
         $project->update($val_data);
