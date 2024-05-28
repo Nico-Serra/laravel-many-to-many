@@ -135,14 +135,16 @@ class ProjectController extends Controller
         //$val_data['type_id'] = $request['type_id'];
 
         //dd($val_data);
-        if ($project->has('technologies')) {
-           // $project->technologies()->detach($project->technologies()->get());
+        if ($request->has('technologies')) {
+            // $project->technologies()->detach($project->technologies()->get());
 
 
 
             $project->technologies()->sync($val_data['technologies']);
             //dd($project->technologies);
             //dd($project->technologies()->get());
+        } else {
+            $project->technologies()->sync([]);
         }
         //dd($project->technologies()->get());
 
