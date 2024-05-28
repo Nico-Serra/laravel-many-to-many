@@ -1,6 +1,11 @@
 @import '~bootstrap/scss/bootstrap';
 
 
-.title_font{
+.title_font {
     font-family: "Honk", system-ui;
+}
+
+.bg_img {
+    background-image: url(../img/bg.png);
+    background-repeat: no-repeat;
 }

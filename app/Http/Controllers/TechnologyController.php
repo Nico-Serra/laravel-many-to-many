@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Technology;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
+use App\Models\Project;
+use Illuminate\Support\Str;
 
 class TechnologyController extends Controller
 {
@@ -13,7 +15,9 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies = Technology::all();
+
+        return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
@@ -21,7 +25,9 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        $technologies = Technology::all();
+
+        return view('admin.technologies.create', compact('technologies'));
     }
 
     /**
@@ -29,7 +35,17 @@ class TechnologyController extends Controller
      */
     public function store(StoreTechnologyRequest $request)
     {
-        //
+        $val_data = $request->validated();
+
+        //dd($val_data);
+
+        $slug = Str::slug($request->name, '-');
+
+        $val_data['slug'] = $slug;
+
+        Technology::create($val_data);
+
+        return to_route('admin.technologies.index')->with('message', 'Technology created with success');
     }
 
     /**
@@ -37,7 +53,11 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        //
+        $projects = $technology->projects()->get();
+
+        //dd($projects);
+
+        return view('admin.technologies.show', compact('projects'));
     }
 
     /**
@@ -45,7 +65,7 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        return view('admin.technologies.edit', compact('technology'));
     }
 
     /**
@@ -53,7 +73,17 @@ class TechnologyController extends Controller
      */
     public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        //
+        $val_data = $request->validated();
+
+        //dd($val_data);
+
+        $slug = Str::slug($request->name, '-');
+
+        $val_data['slug'] = $slug;
+
+        $technology->update($val_data);
+
+        return to_route('admin.technologies.index')->with('message', 'Technology updated with success');
     }
 
     /**
@@ -61,6 +91,8 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+
+        return back()->with('message', $technology->name . ' deleted with success');
     }
 }
